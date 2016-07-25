@@ -1,0 +1,83 @@
+html {
+    background: url("data/background_img.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    opacity: 0.85;
+}
+body {
+    display: flex;
+    margin: 0;
+}
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    width: 10vw;
+    height: 100vh;
+    margin: 0;
+    border: 0.1px solid #ceced2;
+}
+.nav {
+    margin: 30px;
+}
+h1 {
+    font-size: 30px;
+}
+.menu_icon {
+    width: 50px;
+    height: 50px;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width:90vw;
+    height: 100vh;
+    margin: 0;
+}
+
+#imageUpload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #ff71a7;
+    width:90vw;
+    height: 100vh;
+    margin: 0;
+}
+
+#videoUpload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #ff8271;
+    width:90vw;
+    height: 100vh;
+    margin: 0;
+}
+
+#retrieveHistory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #ffc971;
+    width:90vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}

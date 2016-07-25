@@ -5,26 +5,126 @@
     <title>face recognition</title>
     <link rel="stylesheet" href="main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <!--<script src="main.js"></script>-->
+    <script src="main.js"></script>
 </head>
 <body>
 <nav>
-
+    <div class="nav" id="mainIcon" onclick="mainPage()"><h1>H.I.</h1></div>
+    <div class="nav" id="imageIcon" onclick="imagePage()"><img src="data/camera_icon.png" class="menu_icon"
+                                                               alt="camera_icon"></div>
+    <div class="nav" id="videoIcon" onclick="videoPage()"><img src="data/video_icon.png" class="menu_icon"
+                                                               alt="video_icon"></div>
+    <div class="nav" id="historyIcon" onclick="historyPage()"><img src="data/history_icon.png" class="menu_icon"
+                                                                   alt="video_icon"></div>
 </nav>
 <main>
-    <form id="imageUploadForm" method="POST" enctype="multipart/form-data" action="http://localhost:3000/upload">
-        <!--<form id="imageUploadForm" method="post" enctype="multipart/form-data" action="https://warm-escarpment-12602.herokuapp.com/upload">-->
-        <img width="100" height="100" src="" alt="">
-        <input type="file" name="file">
-        <input type="submit" value="Submit">
-    </form>
+    <div id="main">
+        <p>What is your name?</p>
+        <input type="text" id="nameInput" placeholder="John Doe">
+        <button onclick="imagePage()" id="nameSubmit">GO!</button>
+    </div>
+    <div id="imageUpload">
+        <!--<form id="imageUploadForm" method="POST" enctype="multipart/form-data" action="http://localhost:3000/upload">-->
+        <form id="imageUploadForm" method="post" enctype="multipart/form-data"
+              action="https://tranquil-temple-54428.herokuapp.com/upload">
+            <img src="" alt="" id="img">
+            <input type="file" name="file" id="file">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div id="videoUpload">
+        <!--source: http://stackoverflow.com/questions/25159928/upload-and-save-screenshot-taken-from-users-webcam-in-django-canvas-element-to-->
+        <form id="webcamPageForm" method="POST" enctype="multipart/form-data" action="http://localhost:3000/capture">
+            <video id="vid" width="400" height="300" autoplay></video><!-- shows my video stream playing -->
+            <canvas id="canvas" name="canvas" width="400" height="300" style="border:1px solid #d3d3d3;"></canvas>
+            <br> <!--captured image displayed here-->
+            <input type="button" id="imagewc" name="imagewc" onclick="snapshot();" accept="image/*" value="CAPTURE"
+                   capture> <!-- opens my hard drive and expects input from hard drive-->
+            <input type="submit" id="SubmitWebCam" name="SubmitWebCam" class="myButton" value="UPLOAD"
+                   style="display:none"><br><!-- on submit should send user-captured snapshot to views.py-->
+
+            <script type="text/javascript">
+                var video = document.querySelector("#vid");
+                var canvas = document.querySelector('#canvas');
+                var ctx = canvas.getContext('2d');
+                var localMediaStream = null;
+                function uploadImg() {
+                    var dataUrl = canvas.toDataURL();
+                    $.ajax({
+                        type: "POST",
+                        url: $(this).attr("action"),
+                        data: {
+                            imgBase64: dataUrl
+                        }
+                    }).done(function (data) {
+                        console.log(data);
+                    });
+                }
+                function snapshot() {
+                    if (localMediaStream) {
+                        ctx.drawImage(video, 0, 0);   // This draws the captured image on the canvas
+                    }
+                    document.getElementById('SubmitWebCam').style.display = "block";
+                }
+                navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+                window.URL = window.URL || window.webkitURL;
+
+                navigator.getUserMedia({video: true}, function (stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                    localMediaStream = stream;
+                }, function (err) {
+                    console.error("Camera Fail", err);
+                });
+            </script>
+        </form>
+    </div>
+    <div id="retrieveHistory">
+        <button id="retrieve">View History</button>
+    </div>
 </main>
-<button id="bucket">buckets!</button>
-<footer>
-
-</footer>
 <script>
-
+    var mainDiv = document.getElementById("main");
+    var imageDiv = document.getElementById("imageUpload");
+    var videoDiv = document.getElementById("videoUpload");
+    var historyDiv = document.getElementById("retrieveHistory");
+    var mainIconDiv = document.getElementById("mainIcon");
+    var imageIconDiv = document.getElementById("imageIcon");
+    var videoIconDiv = document.getElementById("videoIcon");
+    var historyIconDiv = document.getElementById("historyIcon");
+    mainDiv.style.display = "flex";
+    imageDiv.style.display = "none";
+    videoDiv.style.display = "none";
+    historyDiv.style.display = "none";
+    function mainPage() {
+        mainDiv.style.display = "flex";
+        imageDiv.style.display = "none";
+        videoDiv.style.display = "none";
+        historyDiv.style.display = "none";
+    }
+    function imagePage() {
+        mainDiv.style.display = "none";
+        imageDiv.style.display = "flex";
+        videoDiv.style.display = "none";
+        historyDiv.style.display = "none";
+    }
+    function videoPage() {
+        mainDiv.style.display = "none";
+        imageDiv.style.display = "none";
+        videoDiv.style.display = "flex";
+        historyDiv.style.display = "none";
+    }
+    function historyPage() {
+        mainDiv.style.display = "none";
+        imageDiv.style.display = "none";
+        videoDiv.style.display = "none";
+        historyDiv.style.display = "flex";
+    }
+    function removeDiv(id) {
+        var selectedDiv = document.getElementById(id);
+        selectedDiv.parentNode.removeChild(selectedDiv);
+        return false;
+    }
 </script>
 </body>
 </html>
