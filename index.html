@@ -35,8 +35,8 @@
     <div id="videoUpload">
         <!--source: http://stackoverflow.com/questions/25159928/upload-and-save-screenshot-taken-from-users-webcam-in-django-canvas-element-to-->
         <form id="webcamPageForm" method="POST" enctype="multipart/form-data" action="http://localhost:3000/capture">
-            <video id="vid" width="640" height="480" autoplay></video><!-- shows my video stream playing -->
-            <canvas id="canvas" name="canvas" width="400" height="300" style="border:1px solid #d3d3d3;"></canvas>
+            <video id="vid" width="400" height="300" autoplay></video><!-- shows my video stream playing -->
+            <canvas id="canvas" name="canvas" width="640" height="480" style="border:1px solid #d3d3d3;"></canvas>
             <br> <!--captured image displayed here-->
             <input type="button" id="imagewc" name="imagewc" onclick="snapshot();" accept="image/*" value="CAPTURE"
                    capture> <!-- opens my hard drive and expects input from hard drive-->
